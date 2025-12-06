@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="th">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>KKU Campus Guide — แนะนำสถานที่ มหาวิทยาลัยขอนแก่น</title>
+    <meta name="description"
+        content="KKU Campus Guide — แนะนำสถานที่สำคัญ ภายในมหาวิทยาลัยขอนแก่น พร้อมภาพประกอบ และข้อมูลสั้น ๆ" />
+    <style>
+        /* Box model and sensible defaults */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #ffffff;
+            /* page background */
+            --card: #f8fafc;
+            /* card / panel background */
+            --accent: #ff7a59;
+            /* warm accent */
+            --muted: #54707a;
+            /* muted text */
+            --glass: rgba(2, 6, 23, 0.06);
+            /* subtle glass for hover */
+            --max-width: 1100px;
+            --text: #0b1220;
+            /* primary dark text color */
+            --soft-shadow: 0 6px 22px rgba(9, 18, 28, 0.06);
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Hiragino Kaku Gothic ProN', 'SF Pro Text', 'Microsoft YaHei', 'Helvetica Neue', Arial;
+            background: linear-gradient(180deg, #ff7a59 0%, #ff7a5949 45%, #ff7a59 100%);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.45;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 32px auto;
+            padding: 24px;
+        }
+
+        header.site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            box-shadow: var(--soft-shadow);
+            border: 1px solid rgba(9, 12, 18, 0.04);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .logo {
+            width: 56px;
+            height: 56px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--accent), #ffb289);
+        }
+
+        .logo canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            border-radius: 8px
+        }
+
+        h1 {
+            font-size: 1.35rem;
+            margin: 0
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 0.9rem
+        }
+
+        nav.top-nav {
+            display: flex;
+            gap: 12px;
+            align-items: center
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            border: 1px solid transparent
+        }
+
+        nav a:hover {
+            background: var(--glass);
+            border-color: rgba(9, 12, 18, 0.06)
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 24px
+        }
+
+        .intro {
+            padding: 18px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(248, 250, 252, 0.8), rgba(255, 255, 255, 0.6));
+            border: 1px solid rgba(9, 12, 18, 0.04);
+            box-shadow: 0 6px 20px rgba(16, 24, 40, 0.04)
+        }
+
+        /* 💡 การปรับปรุงสำคัญสำหรับ Masonry Layout 💡 */
+        .places {
+            /* ใช้ Multi-column Layout แทน Grid เพื่อให้กล่องเลื่อนมาชิดกันได้ */
+            columns: 2;
+            column-gap: 18px;
+            margin-top: 12px;
+            /* ลบ display: grid; และ grid-template-columns ออก */
+        }
+
+        .place {
+            background: var(--card);
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(9, 12, 18, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-shadow: 0 6px 18px rgba(9, 12, 18, 0.03);
+
+            /* สำคัญ: ทำให้กล่องไม่ถูกตัดแบ่งข้ามคอลัมน์ และเว้นระยะห่างด้านล่าง */
+            break-inside: avoid-column;
+            margin-bottom: 18px;
+        }
+
+        .place header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+
+        .place h2 {
+            font-size: 1.05rem;
+            margin: 0
+        }
+
+        .place p {
+            color: var(--text);
+            margin: 0
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px
+        }
+
+        figure {
+            margin: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #ffffff;
+            border: 1px solid rgba(9, 12, 18, 0.04)
+        }
+
+        figure img {
+            display: block;
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform .25s ease
+        }
+
+        figure img:hover {
+            transform: scale(1.02)
+        }
+
+        figcaption {
+            padding: 8px;
+            color: var(--muted);
+            font-size: 0.85rem
+        }
+
+        footer.site-footer {
+            margin-top: 26px;
+            padding: 16px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #ffffff, #f8fbff);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(9, 12, 18, 0.04);
+            box-shadow: var(--soft-shadow)
+        }
+
+        footer.site-footer a {
+            color: var(--accent);
+            text-decoration: underline
+        }
+
+        /* small screens */
+        @media (max-width:900px) {
+
+            /* ในจอเล็กยังคงใช้คอลัมน์เดียวเหมือนเดิม แต่ใช้ column แทน grid */
+            .places {
+                columns: 1;
+            }
+
+            figure img {
+                height: 160px
+            }
+        }
+
+        @media (max-width:480px) {
+            .container {
+                padding: 18px;
+                margin: 12px
+            }
+
+            .brand h1 {
+                font-size: 1rem
+            }
+
+            figure img {
+                height: 120px
+            }
+        }
+
+        /* utility */
+        .kicker {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(255, 122, 89, 0.12), rgba(255, 178, 137, 0.06));
+            color: var(--muted);
+            font-weight: 700;
+            font-size: 0.85rem
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="site-header" role="banner">
+            <div class="brand">
+                <div class="logo">
+                    <canvas id="kku-logo-canvas" width="56" height="56" role="img"
+                        aria-label="KKU animated 3D logo"></canvas>
+                    <noscript><img src="https://www.kku.ac.th/wp-content/uploads/2022/01/1.-official-logo-2022-26.png"
+                            alt="KKU logo"></noscript>
+                </div>
+                <div>
+                    <h1>KKU Campus Guide</h1>
+                    <div class="meta">แนะนำสถานที่สำคัญในมหาวิทยาลัยขอนแก่น — KKU (Khon Kaen University)</div>
+                </div>
+            </div>
+
+        </header>
+
+        <main>
+            <section class="intro" aria-labelledby="intro-heading">
+                <h2 id="intro-heading">ยินดีต้อนรับสู่ KKU Campus Guide</h2>
+                <p class="meta">รหัสนักศึกษา: <strong>663380011-8</strong> &nbsp; | &nbsp; ชื่อ-สกุล: <strong>นายณัฐธเนศ
+                        กำเนิดกาลึม</strong></p>
+                <p>หน้านี้เป็นเว็บแนะนำสถานที่สำคัญภายในมหาวิทยาลัยขอนแก่น
+                    เพื่อให้นักศึกษาและผู้เยี่ยมชมสามารถเรียนรู้เกี่ยวกับจุดที่น่าสนใจในพื้นที่มหาวิทยาลัย
+                    พร้อมภาพประกอบและคำอธิบายสั้น ๆ</p>
+            </section>
+
+            <section class="places" aria-label="Places around KKU Campus">
+                <article class="place" id="library">
+                    <header>
+                        <div>
+                            <h2>หอสมุดกลาง มข. (KKU Central Library)</h2>
+                        </div>
+                        <div class="meta">พื้นที่เรียนรู้ & ทรัพยากรข้อมูล</div>
+                    </header>
+                    <p>หอสมุดกลางของมหาวิทยาลัยขอนแก่นเป็นศูนย์กลางการเรียนรู้ มีหนังสือและสื่อการเรียนการสอนมากมาย
+                        พร้อมพื้นที่อ่านหนังสือและห้องประชุมกลุ่ม เหมาะสำหรับการค้นคว้าและเตรียมตัวสอบ</p>
+                    <div class="meta">ข้อมูลจาก : AI</div>
+                        <div class="gallery" aria-hidden="false">
+                        <figure>
+                            <img src="https://assets.sutori.com/user-uploads/image/76a36e6c-cbc4-4544-aec9-5cf3f0d15276/05.jpeg"
+                                alt="Library building exterior">
+                            <figcaption>บรรยากาศภายนอกของหอสมุด</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgcCOOb5QPEy_IHmf7B1OKs3aXBubkVUfPg&s"
+                                alt="Reading area with tables and computers">
+                            <figcaption>พื้นที่อ่านหนังสือภายในหอสมุด</figcaption>
+                        </figure>
+                    </div>
+                    <b>พิกัด : <a
+                            href="https://maps.app.goo.gl/V9KneTQggdvC1Kbg7" target="_blank" >https://maps.app.goo.gl/V9KneTQggdvC1Kbg7</a></b>
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <a href="https://www.facebook.com/KKULib/" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Facebook_icon_%28black%29.svg/2048px-Facebook_icon_%28black%29.svg.png"
+                                alt="Facebook Icon" style="width: 25px; height: auto;">
+                        </a>
+                        <a href="https://www.instagram.com/kkulibrary?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                            target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/256/87/87390.png" alt="IG Icon"
+                                style="width: 25px; height: auto;">
+                        </a>
+                        <a href="https://www.tiktok.com/@kku.library" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Tiktok_icon.svg/2048px-Tiktok_icon.svg.png"
+                                alt="Tiktok Icon" style="width: 25px; height: auto;">
+                        </a>
+                        <a href="https://x.com/KKU_Library" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/X_logo_2023.svg"
+                                alt="X Icon" style="width: 25px; height: auto;">
+                        </a>
+                        <a href="https://library.kku.ac.th/" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/256/20/20155.png"
+                                alt="Webside Icon" style="width: 25px; height: auto;">
+                        </a>
+                    </div>
+                </article>
+
+                <article class="place" id="clock">
+                    <header>
+                        <div>
+                            <h2>คอมเพล็กซ์ (KKU Complex)</h2>
+                        </div>
+                        <div class="meta">จุดรวมตัว & พื้นที่กิจกรรม</div>
+                    </header>
+                    <p> ศูนย์อาหารและบริการ 1 หรือเรียกว่า คอมเพล็กซ์ นอกจากร้านอาหารหลายร้านที่ตั้งเรียงรายอยู่ภายในนี้แล้ว ก็ยังมีร้านขายขนม,
+                        เครื่องดื่ม ไปจนถึงร้านค้าจำหน่ายเสื้อผ้า, สินค้าจำเป็น ไปจนถึงร้านตัดผม, ร้านหนังสือ, ธนาคาร
+                        เรียกได้ว่าเข้ามาที่ศูนย์อาหารและบริการ 1 มหาวิทยาลัยขอนแก่นที่นี่ที่เดียว
+                        ซื้อของได้ครบทุกอย่างสะดวกสบาย</p>
+                    <div class="meta">ข้อมูลจาก : travel.trueid.net</div>
+                    <div class="gallery">
+                        <figure>
+                            <img src="https://asset.kku.ac.th/wp-content/uploads/slider/cache/1e32cdb40ffd11692be86a68184098b4/2022-08-12_09-20-37_861065.jpg"
+                                alt="Clock tower at university plaza">
+                            <figcaption>ภายนอก</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="https://asset.kku.ac.th/wp-content/uploads/2022/04/6-1024x683.jpg"
+                                alt="Students gathered in campus plaza">
+                            <figcaption>กิจกรรมและการรวมกลุ่มที่ลาน</figcaption>
+                        </figure>
+                    </div>
+                    <b>พิกัด : <a
+                            href="https://maps.app.goo.gl/WE8L5TqFFXNi3Q9g6" target="_blank">https://maps.app.goo.gl/WE8L5TqFFXNi3Q9g6</a></b>
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <a href="https://asset.kku.ac.th/venue-space/complex/" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/256/20/20155.png"
+                                alt="Webside Icon" style="width: 25px; height: auto;">
+                        </a>
+                    </div>
+                    
+                </article>
+
+                <article class="place" id="garden">
+                    <header>
+                        <div>
+                            <h2>ลานกิจกรรม ริมบึงสีฐาน</h2>
+                        </div>
+                        <div class="meta">พื้นที่สีเขียวเพื่อการศึกษาและผ่อนคลาย</div>
+                    </header>
+                    <p>เป็นบึงน้ำจืดขนาดเล็ก อยู่ติดกับศูนย์ประชุมเอนกประสงค์กาญจนาภิเษก ในช่วงเย็นจะเห็นภาพ นักศึกษา, 
+                        บุคลากรมหาวิทยาลัยรวมถึงประชาชน มักจะเลือกสถานที่บึงศรีฐานเป็นที่ออกกำลังกาย 
+                        และบางคนก็พาเพื่อน พาครอบครัวมานั่งกินลมชมวิวที่นี่  </p>
+                    <div class="meta">ข้อมูลจาก : travel.trueid.net</div>
+                    <div class="gallery">
+                        <figure>
+                            <img src="https://cms.dmpcdn.com/ugcarticle/2020/02/03/ddcac7b0-1658-11ec-bf85-1bca4c7f474f_original.jpg"
+                                alt="Botanical garden with trees and paths">
+                            <figcaption>มุมทางเดิน</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="https://t1.blockdit.com/photos/2023/04/644ce1f7e9491cf1ff4c980a_800x0xcover_2C8vWoA-.jpg"
+                                alt="Green plants and sunlight">
+                            <figcaption>มุมพักผ่อน</figcaption>
+                        </figure>
+                    </div>
+                    <b>พิกัด : <a
+                            href="https://maps.app.goo.gl/2jZZLYkWfgCvoSnp7" target="_blank">https://maps.app.goo.gl/2jZZLYkWfgCvoSnp7</a></b>
+                </article>
+
+                <article class="place" id="hospital">
+                    <header>
+                        <div>
+                            <h2>โรงพยาบาลศรีนครินทร์ (Srinagarind Hospital)</h2>
+                        </div>
+                        <div class="meta">ศูนย์การแพทย์และการศึกษาด้านสุขภาพ</div>
+                    </header>
+                    <p>เป็นโรงพยาบาลมหาวิทยาลัยระดับตติยภูมิขั้นสูงแห่งแรกในภาคตะวันออกเฉียงเหนือและเป็นโรงเรียนแพทย์สังกัดคณะแพทยศาสตร์ มหาวิทยาลัยขอนแก่น 
+                        เป็นหนึ่งในโรงพยาบาลที่มีความสำคัญต่อการแพทย์ของภูมิภาค ด้วยจำนวนเตียงกว่า 1,500 เตียง 
+                        และปัจจุบัน อยู่ในระหว่างโครงการก่อสร้างเพื่อพัฒนาโรงพยาบาลสู่การเป็น ศูนย์ความเป็นเลิศทางการแพทย์ ของภูมิภาคเอเชียตะวันออกเฉียงใต้ 
+                        ด้วยการขยายขนาดโรงพยาบาลกว่า 5,000 เตียง</p>
+                        <div class="meta">ข้อมูลจาก : wikipedia.org</div>
+                    <div class="gallery">
+                        <figure>
+                            <img src="https://cdn-clinics.topclinic.in.th/3b05c237-a6e7-41f2-a24f-640a06c7f48d/443ca2bb-b526-4477-99d7-db9dbd1936bd-w960.webp"
+                                alt="Hospital building exterior">
+                            <figcaption>ตึกโรงพยาบาลหลัก</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="https://mpics.mgronline.com/pics/Images/562000005155701.JPEG"
+                                alt="Healthcare professionals discussing in corridor">
+                            <figcaption>โครงการก่อสร้างใหญ่ของโรงพยาบาล</figcaption>
+                        </figure>
+                    </div>
+                    <b>พิกัด : <a
+                            href="https://maps.app.goo.gl/NjMoWPCw4rCmUdhs6" target="_blank">https://maps.app.goo.gl/NjMoWPCw4rCmUdhs6</a></b>
+                        <div style="display: flex; gap: 15px; align-items: center;">
+                        <a href="https://www.facebook.com/SrinagarindHospitalMDKKU/?locale=th_TH" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Facebook_icon_%28black%29.svg/2048px-Facebook_icon_%28black%29.svg.png"
+                                alt="Facebook Icon" style="width: 25px; height: auto;">
+                        </a>
+                        <a href="https://srinagarind.md.kku.ac.th/" target="_blank">
+                            <img src="https://cdn-icons-png.flaticon.com/256/20/20155.png"
+                                alt="Webside Icon" style="width: 25px; height: auto;">
+                        </a>
+                    </div>
+                </article>
+
+                <article class="place" id="market">
+                    <header>
+                        <div>
+                            <h2>ตลาดนัดเปิดท้าย มข. (Flea Market KKU)</h2>
+                        </div>
+                        <div class="meta">ศูนย์รวมสินค้าและอาหาร</div>
+                    </header>
+                    <p>ตลาดเปิดท้ายหอกาญ มข. แหล่งรวมสินค้าแฟชั่น สินค้ามือสอง อาหารอร่อยในจังหวัดขอนแก่น ตลาดเปิดท้าย
+                        ที่เที่ยวมหาวิทยาลัยขอนแก่น ตั้งอยู่บริเวณลานจอดรถด้านศูนย์ประชุมอเนกประสงค์กาญจนาภิเษก มีเฉพาะ
+                        วันศุกร์-อาทิตย์ เวลา17.00-22.00 น.</p>
+                    <div class="meta">ข้อมูลจาก : wongnai.com</div>
+                    <div class="gallery">
+                        <figure>
+                            <img
+                                src="https://asset.kku.ac.th/wp-content/uploads/2025/02/2025-02-04_09-16-08_876538.jpg">
+                            <figcaption>ร้านค้าในตลาด</figcaption>
+                        </figure>
+                        <figure>
+                            <img
+                                src="https://kkdata.khonkaenlink.info/wp-content/uploads/2024/01/2022-06-21_07-36-56_877220.jpg">
+                            <figcaption>มุมสูงของตลาด</figcaption>
+                        </figure>
+                    </div>
+                    <b>พิกัด : <a
+                            href="https://maps.app.goo.gl/6FSjELBuUMsrfkz7A" target="_blank">https://maps.app.goo.gl/6FSjELBuUMsrfkz7A</a></b>
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <a href="https://www.facebook.com/profile.php?id=61556839171895&locale=th_TH" target="_blank">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Facebook_icon_%28black%29.svg/2048px-Facebook_icon_%28black%29.svg.png"
+                                alt="Facebook Icon" style="width: 25px; height: auto;">
+                        </a>
+                    </div>
+                </article>
+
+                <article class="place" id="garden">
+                    <header>
+                        <div>
+                            <h2>สะพานขาว มหาวิทยาลัยขอนแก่น</h2>
+                        </div>
+                        <div class="meta">พื้นที่สีเขียวเพื่อการศึกษาและผ่อนคลาย</div>
+                    </header>
+                    <p>สะพานขาว ตั้งอยู่ใจกลางพื้นที่ ของมหาวิทยาลัยขอนแก่น โดยด้านข้างฝั่งหนึ่งเป็นสระพลาสติก และอีกฝั่งเป็นป่าไม้ ช่วงหน้าหนาวอากาศจะเย็นมากเพราะมีต้นไม้เยอะนั่นเอง</p>
+                    <div class="meta">ข้อมูลจาก : IG khonkaenuniversity</div>
+                    <div class="gallery">
+                        <figure>
+                            <img src="https://image.makewebcdn.com/makeweb/m_1920x0/iWIQvmfWl/%E0%B8%A1.%E0%B8%82%E0%B8%AD%E0%B8%99%E0%B9%81%E0%B8%81%E0%B9%88%E0%B8%99/171026-pic-29.jpg"
+                                alt="Road">
+                            <figcaption>มุมถนน</figcaption>
+                        </figure>
+                        <figure>
+                            <img src="https://www.kku.ac.th/wp-content/uploads/2024/02/037-scaled.jpg"
+                                alt="Art Lane event at KKU">
+                            <figcaption>งาน Art Lane ที่จัดประจำทุกปีที่นี่</figcaption>
+                        </figure>
+                    </div>
+                    <b>พิกัด : <a
+                            href="https://maps.app.goo.gl/XxEuUVuEQi9NG5G38" target="_blank">https://maps.app.goo.gl/XxEuUVuEQi9NG5G38</a></b>
+                </article>
+
+            </section>
+
+            <footer class="site-footer" role="contentinfo">
+                <div>
+                    <strong>KKU Campus Guide</strong>
+                    <div class="meta">Created as a lab exercise — สามารถแก้ไขข้อมูลนี้ได้ตามต้องการ</div>
+                </div>
+                <div class="meta">Contact: <a href="mailto:student@example.com">natthanet.k@kkumail.com</a></div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        (function () {
+            const canvas = document.getElementById('kku-logo-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let dpr = Math.max(window.devicePixelRatio || 1, 1);
+
+            function resize() {
+                const rect = canvas.getBoundingClientRect();
+                const cssW = Math.round(rect.width) || 56;
+                const cssH = Math.round(rect.height) || 56;
+                canvas.width = cssW * dpr;
+                canvas.height = cssH * dpr;
+                canvas.style.width = cssW + 'px';
+                canvas.style.height = cssH + 'px';
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            let angle = 0;
+            let t = 0;
+
+            function draw() {
+                const w = canvas.width / dpr;
+                const h = canvas.height / dpr;
+                ctx.clearRect(0, 0, w, h);
+
+                const cx = w / 2, cy = h / 2;
+                const radius = Math.min(w, h) / 2 - 4;
+
+                // Rotate left continuously
+                angle -= 0.05;
+
+                // Create a subtle 3D-like effect (pseudo-perspective)
+                // The object will appear to rotate/pulse slightly
+                const perspectiveScale = 1 + 0.1 * Math.sin(angle * 0.5);
+
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.scale(perspectiveScale, perspectiveScale);
+
+                // Apply rotation only to the sphere's content and appearance, not the whole canvas
+                const sphereAngle = angle * 0.8;
+                const shineAngle = angle * 1.5;
+
+                // Dynamic radial background for the "sphere"
+                // Simulate lighting source rotating/moving subtly
+                const grd = ctx.createRadialGradient(
+                    radius * 0.2 * Math.cos(shineAngle * 0.2),
+                    radius * 0.2 * Math.sin(shineAngle * 0.2),
+                    radius * 0.15, 0, 0, radius);
+                grd.addColorStop(0, '#ff7a59'); // Accent color
+                grd.addColorStop(1, '#ffb289'); // Lighter accent
+
+                ctx.beginPath();
+                // Draw a circle for the main body
+                ctx.arc(0, 0, radius, 0, Math.PI * 2);
+                ctx.fillStyle = grd;
+                ctx.fill();
+
+                // Subtle stroke
+                ctx.lineWidth = 1.5 / perspectiveScale;
+                ctx.strokeStyle = 'rgba(9,12,18,0.1)';
+                ctx.stroke();
+
+                // Inner shine/highlight to enhance 3D appearance
+                ctx.beginPath();
+                const shineX = radius * 0.4 * Math.cos(shineAngle);
+                const shineY = radius * 0.4 * Math.sin(shineAngle);
+                ctx.arc(shineX, shineY, radius * 0.5, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,0.6)';
+                ctx.globalCompositeOperation = 'soft-light';
+                ctx.fill();
+                ctx.globalCompositeOperation = 'source-over';
+
+                // KKU text (Rotated opposite to sphere for visual contrast)
+                ctx.save();
+                ctx.rotate(-sphereAngle * 0.4); // Text rotates slower/opposite
+                ctx.fillStyle = '#FFFFFF'; // White text for contrast
+                ctx.font = Math.round(radius * 0.6) + 'px Inter, system-ui, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('KKU', 0, 1);
+                ctx.restore();
+
+                ctx.restore(); // Restore context to prevent subsequent draws from being affected
+
+                t += 16;
+                requestAnimationFrame(draw);
+            }
+
+            canvas.addEventListener('click', () => {
+                dpr = Math.max(window.devicePixelRatio || 1, 1);
+                // Quick scale pulse on click
+                canvas.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    canvas.style.transform = 'scale(1)';
+                }, 200);
+            });
+
+            window.addEventListener('resize', resize);
+            window.matchMedia && window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`).addEventListener('change', () => { dpr = Math.max(window.devicePixelRatio || 1, 1); resize(); });
+
+            resize();
+            draw();
+        })();
+    </script>
+</body>
+
+</html>
