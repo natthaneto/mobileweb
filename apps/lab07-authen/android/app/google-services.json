@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "856305774705",
+    "project_id": "web-lab6-df579",
+    "storage_bucket": "web-lab6-df579.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856305774705:android:4c7dd84b2543511dfd2bd0",
+        "android_client_info": {
+          "package_name": "cpkku.natthanet.lab07"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856305774705-nmctbikdh9l2iu25ethjm509d5lmini6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cpkku.natthanet.lab07",
+            "certificate_hash": "1ae70ec9dacc0e37c005139096ccba634fd5be06"
+          }
+        },
+        {
+          "client_id": "856305774705-1cpjrudraqmhplsi9ce3e27oqtgenmir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1PBNuz0bSNOYVPoyE8JWc_xdfQVTvyKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856305774705-1cpjrudraqmhplsi9ce3e27oqtgenmir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
