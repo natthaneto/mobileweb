@@ -37,7 +37,6 @@ export class ArmWorkoutEngine {
   }
 
   private clone(): WorkoutState {
-    // ใช้ JSON parse/stringify เพื่อป้องกันการอ้างอิง object เดิม (Deep Clone)
     return JSON.parse(JSON.stringify(this.state));
   }
 
@@ -65,50 +64,65 @@ export class ArmWorkoutEngine {
   }
 
   /**
-   * ประมวลผลข้อมูลจาก Sensor
-   * บน iOS ค่า ay (Including Gravity) เมื่อถือเครื่องแนวตั้งจะเริ่มที่ประมาณ 9.8
+   * ฟังก์ชันช่วยรีเซ็ตค่ารอบการขยับ
+   */
+  private resetCycle(currentY: number) {
+    this.phase = "WAIT_UP";
+    this.peak = currentY;
+    this.valley = currentY;
+    this.emit();
+  }
+
+  /**
+   * ประมวลผลข้อมูลจาก Sensor (เวอร์ชันยืดหยุ่นพิเศษสำหรับ iPhone)
    */
   async process(sample: AccelSample) {
     if (this.state.status !== "RUNNING") return;
 
     const y = sample.ay;
-    const side = Math.abs(sample.ax) + Math.abs(sample.az); // วัดการแกว่งซ้ายขวา/หน้าหลัง
+    const side = Math.abs(sample.ax) + Math.abs(sample.az);
 
     // บันทึกจุดสูงสุดต่ำสุดที่เจอในรอบนั้น
     if (y > this.peak) this.peak = y;
     if (y < this.valley) this.valley = y;
 
-    // --- RULE-BASED ALGORITHM ---
+    // --- FLEXIBLE RULE-BASED ALGORITHM ---
     
-    // จังหวะที่ 1: รอให้ยกแขนขึ้น (Y เพิ่มขึ้น)
+    // จังหวะที่ 1: รอให้ยกแขนขึ้น (เพิ่มเกณฑ์เป็น 3.0 เพื่อความเสถียร)
     if (this.phase === "WAIT_UP") {
-      // ถ้า Y สูงกว่าจุดต่ำสุดเกิน 2.0 หน่วย (เริ่มมีการเคลื่อนที่ขึ้น)
-      if (y > this.valley + 2.0) {
+      if (y > this.valley + 3.0) { 
         this.phase = "WAIT_DOWN";
-        this.haptics.success(); // สั่นเบาๆ ให้รู้ว่าระบบตรวจเจอการยกแล้ว
+        this.haptics.success(); 
       }
     } 
-    // จังหวะที่ 2: รอให้ลดแขนลง (Y ลดลงกลับมา)
+    // จังหวะที่ 2: รอให้ลดแขนลง
     else if (this.phase === "WAIT_DOWN") {
-      // ถ้า Y ต่ำกว่าจุดสูงสุดเกิน 2.0 หน่วย (แขนกลับมาที่เดิม)
-      if (y < this.peak - 2.0) {
+      if (y < this.peak - 3.0) {
         const now = Date.now();
         const repMs = now - this.lastRepTime;
-        const rom = this.peak - this.valley; // ช่วงกว้างการขยับ (Range of Motion)
+        const rom = this.peak - this.valley;
+
+        // --- ระบบกรองสัญญาณรบกวน (Deadzone Filter) ---
+        // ถ้าขยับน้อยกว่า 4.5 หน่วย (เช่น ขยับแค่เซนเดียว) 
+        // ให้ถือว่าเป็น Noise และเริ่มนับใหม่โดยไม่แจ้งเตือนความผิดพลาด
+        if (rom < 4.5) {
+          this.resetCycle(y);
+          return;
+        }
 
         let ok = true;
         let msg = "OK";
 
-        // ตรวจสอบเงื่อนไขตามโจทย์ (Rule-based)
-        if (rom < 3.5) { 
+        // ตรวจสอบเงื่อนไข (ปรับให้ยืดหยุ่นขึ้น)
+        if (rom < 5.5) { 
           ok = false; 
           msg = "ยกแขนไม่สุด"; 
-        } else if (repMs < 700) { 
+        } else if (repMs < 600) { 
           ok = false; 
           msg = "เร็วเกินไป"; 
-        } else if (side > 6.0) { 
+        } else if (side > 8.0) { 
           ok = false; 
-          msg = "กรุณายกแนวตั้ง"; 
+          msg = "แขนไม่นิ่ง"; 
         }
 
         this.state.stats.repsTotal++;
@@ -117,21 +131,17 @@ export class ArmWorkoutEngine {
           this.state.repDisplay++;
           this.state.stats.repsOk++;
           this.state.stats.score++;
-          this.haptics.success(); // สั่นยืนยันความสำเร็จ
+          this.haptics.success();
         } else {
           this.state.stats.repsBad++;
-          this.haptics.warning(); // สั่นเตือน
-          this.tts.speak(msg);    // พูดเตือนความผิดพลาด
+          this.haptics.warning();
+          this.tts.speak(msg);
         }
 
         this.state.stats.lastMessage = msg;
         this.lastRepTime = now;
         
-        // รีเซ็ตเพื่อรอรับรอบถัดไป
-        this.phase = "WAIT_UP";
-        this.peak = y;
-        this.valley = y;
-        this.emit();
+        this.resetCycle(y);
       }
     }
   }

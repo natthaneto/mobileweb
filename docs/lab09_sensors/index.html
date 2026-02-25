@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,75 +16,126 @@
             align-items: center;
             min-height: 100vh;
             color: #333;
-            padding: 20px 0; /* เพิ่มพื้นที่ว่างบนล่าง */
+            padding: 40px 0;
         }
+
         .container {
             background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 600px; /* ขยายความกว้างเพื่อรองรับ 3 คอลัมน์ */
+            padding: 2.5rem;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+            max-width: 700px;
             width: 95%;
             text-align: center;
         }
+
         h1 {
-            color: #3880ff; /* Ionic Blue */
-            font-size: 1.5rem;
+            color: #3880ff;
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
+            font-weight: 500;
         }
+
+        .author-info {
+            font-weight: 300;
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        /* Video Section */
+        .video-section {
+            margin-bottom: 2.5rem;
+            background: #000;
+            border-radius: 16px;
+            overflow: hidden;
+            line-height: 0;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        video {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #3880ff;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
         .gallery-preview {
             display: grid;
-            /* ปรับเป็น 3 คอลัมน์เท่าๆ กัน */
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 15px; /* เพิ่มระยะห่างระหว่างภาพ */
-            margin: 2rem 0;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 2.5rem;
         }
+
         .gallery-preview img {
             width: 100%;
-            aspect-ratio: 9 / 19; /* รักษาอัตราส่วนหน้าจอ iPhone ให้เท่ากันทุกรูป */
-            object-fit: cover; /* ป้องกันรูปเบี้ยว */
+            aspect-ratio: 9 / 19;
+            object-fit: cover;
             border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s;
         }
+
         .gallery-preview img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+            transform: translateY(-5px);
         }
+
         .download-section {
             border-top: 1px solid #eee;
-            padding-top: 1.5rem;
+            padding-top: 2rem;
         }
+
         h3 {
-            font-weight: 300;
+            font-weight: 500;
             font-size: 1rem;
-            color: #666;
-            margin-bottom: 1rem;
+            color: #555;
+            margin-bottom: 1.2rem;
         }
+
         .btn-download {
             display: inline-block;
             background-color: #3880ff;
             color: white;
-            padding: 14px 28px;
+            padding: 14px 32px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 500;
-            transition: background 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 12px rgba(56, 128, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(56, 128, 255, 0.3);
         }
+
         .btn-download:hover {
             background-color: #2666d1;
-            box-shadow: 0 6px 16px rgba(56, 128, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 128, 255, 0.4);
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
         <h1>แอปพลิเคชันออกกำลังกายยกแขน</h1>
-        <h3>ทดสอบด้วย iPhone 13 Pro Max</h3>
-        <p style="font-weight: 300; color: #888;">By ณัฐธเนศ กำเนิดกาลึม 663380011-8</p>
-        
+        <h3>ทดสอบด้วย iPhone 13</h3>
+        <p class="author-info">By ณัฐธเนศ กำเนิดกาลึม 663380011-8</p>
+
+        <div class="section-title">Video Demo</div>
+        <div class="video-section">
+            <video controls>
+                <source src="./image/vdo.mp4" type="video/quicktime">
+                <source src="./image/vdo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="section-title">Screenshots</div>
         <div class="gallery-preview">
             <img src="./image/image1.png" alt="Preview 1">
             <img src="./image/image2.png" alt="Preview 2">
@@ -102,4 +154,5 @@
     </div>
 
 </body>
+
 </html>
